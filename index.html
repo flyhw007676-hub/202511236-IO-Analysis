@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>산업연관표 분석 웹앱 (2023)</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+<header>
+  <h1>산업연관표 분석 웹앱 (2023년 한국, 생산자가격)</h1>
+  <p>산업조직론 과제물1 · 자료: 한국은행 2023년 산업연관표(연장표) · 모든 계산은 내 브라우저 안에서 수행됨</p>
+</header>
+<main>
+<section>
+  <h2>1. 자료 불러오기</h2>
+  <p class="note">버튼을 누르면 data 폴더의 엑셀을 읽어옴. 기본부문(약 12MB)은 수십 초 걸릴 수 있음.</p>
+  <button data-load="large">대분류(33)</button>
+  <button data-load="medium">중분류(83)</button>
+  <button data-load="small">소분류(165)</button>
+  <button data-load="basic">기본부문(380)</button>
+  <button class="sub" id="loadAll">네 가지 모두</button>
+  <div id="status" class="note"></div>
+  <p>분석 기준 분류: <select id="cls"></select></p>
+</section>
+
+<section>
+  <h2>2. 원자료 탐색 (시트·산업 검색)</h2>
+  <select id="sheet"></select>
+  <input id="q" placeholder="행 검색: 코드 또는 산업명">
+  <span id="sheetUnit" class="unit"></span>
+  <div class="wrap"><table id="rowList"></table></div>
+  <p class="note">행을 누르면 그 행의 모든 열 값이 아래에 표시됨. 열 검색:
+  <input id="cq" placeholder="열 이름·코드 (예: 수출)"></p>
+  <div id="rowTitle"></div>
+  <div class="wrap"><table id="rowDetail"></table></div>
+</section>
+
+<section>
+  <h2>3. 산업구조 한눈에 보기</h2>
+  <p class="note">단위: 총산출·부가가치 = 백만원, 비율 = %, 영향력·감응도계수 = 계수(평균 1). 머리글을 누르면 정렬됨.</p>
+  <div class="wrap"><table id="overview"></table></div>
+  <button class="sub" id="csv">CSV 내려받기</button>
+</section>
+
+<section>
+  <h2>4. 최종수요 변화 시뮬레이션</h2>
+  <p class="note">생산유발계수(L)를 이용해 ΔX = L·ΔF 계산. ΔF는 국산품 최종수요 변화액(백만원, 감소는 음수).</p>
+  <p>(가) 산업 하나에 금액 입력:
+    <select id="simInd"></select>
+    <input id="simAmt" type="number" value="1000000" style="width:130px"> 백만원
+    <button id="runInd">계산</button></p>
+  <p>(나) 수출 전체 변화율:
+    <input id="simRate" type="number" value="-10" style="width:80px"> %
+    <button id="runExp">계산</button></p>
+  <div id="simSummary"></div>
+  <div class="wrap"><table id="simTable"></table></div>
+</section>
+
+<section>
+  <h2>5. 분류 수준별 비교</h2>
+  <p class="note">같은 충격(수출 −10%)도 분류를 묶을수록 결과가 달라짐. 불러온 표만 비교됨. 단위: 조원(총산출·생산감소), %.</p>
+  <button id="cmp">비교 계산</button>
+  <div class="wrap"><table id="cmpTable"></table></div>
+</section>
+
+<section>
+  <h2>분석 방법과 한계</h2>
+  <p class="note">국산투입계수 Ad, 생산유발계수 L=(I−Ad)⁻¹(엑셀 값 사용), 부가가치율 v = 부가가치계 ÷ 총투입계, 부가가치유발 ΔV = v·ΔX. 영향력계수 = L 열합÷평균, 감응도계수 = L 행합÷평균. 투입구조 고정·공급제약 없음을 가정한 단기 근사이며, 생산자가격 기준이라 구매자가격과 다름. 자세한 설명은 README.md 참고.</p>
+</section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
