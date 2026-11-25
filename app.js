@@ -1,9 +1,9 @@
 // 산업연관표 분석 웹앱 — 엑셀을 SheetJS로 읽고 브라우저에서 계산
 const FILES = {
-  large:  ['대분류(33)',  'data/io-2023-large.xlsx'],
-  medium: ['중분류(83)',  'data/io-2023-medium.xlsx'],
-  small:  ['소분류(165)', 'data/io-2023-small.xlsx'],
-  basic:  ['기본부문(380)', 'data/io-2023-basic.xlsx'],
+  large:  ['대분류(33)',  'io-2023-large.xlsx'],
+  medium: ['중분류(83)',  'io-2023-medium.xlsx'],
+  small:  ['소분류(165)', 'io-2023-small.xlsx'],
+  basic:  ['기본부문(380)', 'io-2023-basic.xlsx'],
 };
 const WB = {}, CACHE = {}, MODEL = {};
 const $ = id => document.getElementById(id);
